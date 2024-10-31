@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Details - <%= circle.name %></title>
+</head>
+<body>
+    <h1>Circle: <%= circle.name %></h1>
+
+    <section>
+        <h2>Parents in Circle</h2>
+        <ul>
+            <% circle.parents.forEach(parent => { %>
+                <li><%= parent.name %></li>
+            <% }) %>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Posts</h2>
+        <% if (circle.posts && circle.posts.length > 0) { %>
+            <ul>
+                <% circle.posts.forEach(post => { %>
+                    <li>
+                        <p><strong>Posted by:</strong> Parent: <%= post.parent_id.name %></p>
+                        <p><%= post.content %></p>
+
+                        <% if (post.replies && post.replies.length > 0) { %>
+                            <h4>Replies:</h4>
+                            <ul>
+                                <% post.replies.forEach(reply => { %>
+                                    <li>
+                                        <p><strong>Replied by Parent:</strong> <%= reply.parent_id_replying.name %></p>
+                                        <p><%= reply.content %></p>
+                                    </li>
+                                <% }) %>
+                            </ul>
+                        <% } %>
+                    </li>
+                    <hr>
+                    <form action="/create-reply" method="POST">
+                        <input type="hidden" name="circleId" value="<%= circle._id %>">
+                        <input type="hidden" name="postId" value="<%= post._id %>">
+                        <textarea name="replyContent" placeholder="Write a reply..." required></textarea>
+                        <button type="submit">Add Reply</button>
+                    </form>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p>No posts yet in this circle.</p>
+        <% } %>
+    </section>
+
+    <a href="/circlesOfOneParent">Back to My Circles</a>
+</body>
+</html>

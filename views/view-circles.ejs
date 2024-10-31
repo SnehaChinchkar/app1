@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circles of Parent</title>
+    <link rel="stylesheet" href="/styles.css"> 
+</head>
+<body>
+    <h1>Circles of Parent</h1>
+    
+    <% if (circles.length > 0) { %>
+        <ul>
+            <% circles.forEach(circle => { %>
+                <li>
+                    <strong>Circle Name:</strong> 
+                    <a href="/viewCircle/<%= encodeURIComponent(circle.name) %>"><%= circle.name %></a><br>
+                    <strong>Member Count:</strong> <%= circle.member_count %><br>
+                    <strong>Posts:</strong> <%= circle.posts.length %><br>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No circles found for this parent.</p>
+    <% } %>
+    
+    <a href="/">Go back to Home</a> 
+</body>
+</html>
